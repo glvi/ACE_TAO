@@ -91,12 +91,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     int persistent_id_policy,
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
       creation_parameters)
-  : user_id_map_ (0)
-  , servant_map_ (0)
-  , id_uniqueness_strategy_ (0)
-  , lifespan_strategy_ (0)
-  , id_assignment_strategy_ (0)
-  , id_hint_strategy_ (0)
+  : user_id_map_ (nullptr)
+  , servant_map_ (nullptr)
+  , id_uniqueness_strategy_ (nullptr)
+  , lifespan_strategy_ (nullptr)
+  , id_assignment_strategy_ (nullptr)
+  , id_hint_strategy_ (nullptr)
   , using_active_maps_ (false)
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
@@ -317,12 +317,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 
   // Finally everything is fine.  Make sure to take ownership away
   // from the auto pointer.
-  this->id_uniqueness_strategy_ = new_id_uniqueness_strategy;
-  this->lifespan_strategy_ =  new_lifespan_strategy;
-  this->id_assignment_strategy_ = new_id_assignment_strategy;
-  this->id_hint_strategy_ = new_id_hint_strategy;
-  this->servant_map_ = new_servant_map;
-  this->user_id_map_ = new_user_id_map;
+  this->id_uniqueness_strategy_ = std::move(new_id_uniqueness_strategy);
+  this->lifespan_strategy_      = std::move(new_lifespan_strategy);
+  this->id_assignment_strategy_ = std::move(new_id_assignment_strategy);
+  this->id_hint_strategy_       = std::move(new_id_hint_strategy);
+  this->servant_map_            = std::move(new_servant_map);
+  this->user_id_map_            = std::move(new_user_id_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,

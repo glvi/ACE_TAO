@@ -76,7 +76,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include <memory>
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+#if __cplusplus < 201703L
 using std::auto_ptr;
+#else
+template<typename X>
+using auto_ptr = std::unique_ptr<X>;
+#endif
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
